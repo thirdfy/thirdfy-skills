@@ -1,0 +1,25 @@
+# Validate thirdfy-skills: frontmatter, registry parity, deploy keys, and every
+# actionRef against the live public action catalog.
+
+name: Validate Skills
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  schedule:
+    - cron: '0 6 * * 1'
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Validate skills against the live catalog
+        run: node scripts/validate-skills.mjs --live

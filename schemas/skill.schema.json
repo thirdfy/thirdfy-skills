@@ -1,0 +1,240 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/thirdfy/thirdfy-skills/blob/main/schemas/skill.schema.json",
+  "title": "Thirdfy skill frontmatter",
+  "type": "object",
+  "required": [
+    "name",
+    "description",
+    "version",
+    "tags",
+    "metadata"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "name": {
+      "type": "string",
+      "minLength": 2
+    },
+    "description": {
+      "type": "string",
+      "minLength": 8
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+    },
+    "homepage": {
+      "type": "string"
+    },
+    "tags": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "metadata": {
+      "type": "object",
+      "required": [
+        "openclaw"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "openclaw": {
+          "type": "object",
+          "required": [
+            "requires",
+            "primaryEnv",
+            "rails",
+            "executionModel",
+            "integrationMode",
+            "custodyMode",
+            "contract",
+            "contributor"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "requires": {
+              "type": "object",
+              "required": [
+                "env"
+              ],
+              "additionalProperties": false,
+              "properties": {
+                "env": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              }
+            },
+            "primaryEnv": {
+              "type": "string",
+              "minLength": 1
+            },
+            "rails": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "executionModel": {
+              "type": "string",
+              "enum": [
+                "model_a",
+                "model_b",
+                "hosted",
+                "utility",
+                "context_only",
+                "read_only",
+                "hybrid"
+              ]
+            },
+            "primaryRail": {
+              "type": "string",
+              "minLength": 1
+            },
+            "deployKeys": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "frameworkContract": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "compatibility": {
+              "type": "object",
+              "required": [
+                "apiVersion",
+                "supportedChains",
+                "executionModel"
+              ],
+              "additionalProperties": false,
+              "properties": {
+                "apiVersion": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "supportedChains": {
+                  "type": "array",
+                  "minItems": 1,
+                  "items": {
+                    "type": "integer"
+                  }
+                },
+                "executionModel": {
+                  "type": "string",
+                  "enum": [
+                    "model_a",
+                    "model_b",
+                    "hosted",
+                    "utility",
+                    "context_only",
+                    "read_only",
+                    "hybrid"
+                  ]
+                }
+              }
+            },
+            "integrationMode": {
+              "type": "string",
+              "enum": [
+                "api_connector",
+                "cli",
+                "persona",
+                "monetization",
+                "analytics"
+              ]
+            },
+            "custodyMode": {
+              "type": "string",
+              "enum": [
+                "managed",
+                "byow",
+                "mixed",
+                "none"
+              ]
+            },
+            "contract": {
+              "type": "object",
+              "required": [
+                "actionRefsMode",
+                "snapshotSource"
+              ],
+              "additionalProperties": false,
+              "properties": {
+                "catalogEndpoint": {
+                  "type": "string"
+                },
+                "discoveryEndpoint": {
+                  "type": "string"
+                },
+                "executeIntentEndpoint": {
+                  "type": "string"
+                },
+                "statusEndpoint": {
+                  "type": "string"
+                },
+                "buildTxEndpoint": {
+                  "type": "string"
+                },
+                "actionRefsMode": {
+                  "type": "string",
+                  "enum": [
+                    "dynamic_discovery",
+                    "static",
+                    "not_applicable"
+                  ]
+                },
+                "actionRefs": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "snapshotSource": {
+                  "type": "string",
+                  "minLength": 1,
+                  "description": "Where actionRefs are checked: the public action catalog URL."
+                }
+              }
+            },
+            "contributor": {
+              "type": "object",
+              "required": [
+                "allowsExternalContributions",
+                "reviewTier"
+              ],
+              "additionalProperties": false,
+              "properties": {
+                "allowsExternalContributions": {
+                  "type": "boolean"
+                },
+                "reviewTier": {
+                  "type": "string",
+                  "enum": [
+                    "standard",
+                    "elevated"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

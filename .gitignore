@@ -1,0 +1,7 @@
+# Local files that never belong in this repository
+.env
+.env.*
+!.env.example
+*.local.md
+.DS_Store
+node_modules/

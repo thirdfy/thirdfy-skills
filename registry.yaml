@@ -1,0 +1,168 @@
+version: 2
+generatedAt: "2026-10-16T00:00:00Z"
+pin: main
+installUrl: https://github.com/thirdfy/thirdfy-skills
+catalog: https://api.thirdfy.com/api/v1/agent/actions/catalog
+deployKeyAliases:
+  perps_market_scan:
+    skills:
+      - thirdfy-hyperliquid-perps-read
+      - earnclaw-hyperliquid-perps-strategy
+  perps_execution_guard:
+    skills:
+      - earnclaw-hyperliquid-risk-guard
+      - thirdfy-cli-execution
+  allora_forecast:
+    skills:
+      - earnclaw-allora-forecast
+skills:
+  - id: thirdfy
+    primary: true
+    owner: thirdfy-core
+    version: 2.0.0
+    lifecycle: stable
+    riskTier: high
+    executionModel: hybrid
+    integrationMode: api_connector
+    custodyMode: managed
+    primaryRail: agent_wallet
+    sourcePath: thirdfy/SKILL.md
+    actionContractMode: dynamic_discovery
+    rails:
+      - mcp
+      - cli
+    requiredEnv:
+      - THIRDFY_AGENT_API_KEY
+  - id: thirdfy-cli-execution
+    owner: thirdfy-core
+    version: 2.0.0
+    lifecycle: stable
+    riskTier: high
+    executionModel: hybrid
+    integrationMode: cli
+    custodyMode: managed
+    primaryRail: agent_wallet
+    sourcePath: thirdfy-cli-execution/SKILL.md
+    actionContractMode: dynamic_discovery
+    rails:
+      - cli
+      - agent_wallet
+    requiredEnv:
+      - THIRDFY_AGENT_API_KEY
+      - THIRDFY_AGENT_KEY
+  - id: thirdfy-market-data
+    owner: thirdfy-core
+    version: 2.0.0
+    lifecycle: stable
+    riskTier: low
+    executionModel: read_only
+    integrationMode: analytics
+    custodyMode: none
+    primaryRail: read
+    sourcePath: thirdfy-market-data/SKILL.md
+    actionContractMode: static
+    rails:
+      - mcp
+      - cli
+    requiredEnv:
+      - THIRDFY_AGENT_API_KEY
+  - id: thirdfy-hyperliquid-perps-read
+    owner: thirdfy-core
+    version: 2.0.0
+    lifecycle: stable
+    riskTier: low
+    executionModel: read_only
+    integrationMode: api_connector
+    custodyMode: managed
+    primaryRail: read
+    sourcePath: thirdfy-hyperliquid-perps-read/SKILL.md
+    actionContractMode: static
+    rails:
+      - mcp
+      - cli
+    requiredEnv:
+      - THIRDFY_AGENT_API_KEY
+  - id: thirdfy-private-actions
+    owner: thirdfy-core
+    version: 1.0.0
+    lifecycle: beta
+    riskTier: high
+    executionModel: hybrid
+    integrationMode: api_connector
+    custodyMode: managed
+    primaryRail: agent_wallet
+    sourcePath: thirdfy-private-actions/SKILL.md
+    actionContractMode: static
+    rails:
+      - mcp
+      - cli
+      - agent_wallet
+    requiredEnv:
+      - THIRDFY_AGENT_API_KEY
+  - id: thirdfy-buy-credits
+    owner: thirdfy-monetization
+    version: 2.0.0
+    lifecycle: stable
+    riskTier: medium
+    executionModel: utility
+    integrationMode: monetization
+    custodyMode: managed
+    primaryRail: credits
+    sourcePath: thirdfy-buy-credits/SKILL.md
+    actionContractMode: static
+    rails:
+      - credits
+      - x402
+    requiredEnv:
+      - THIRDFY_AGENT_API_KEY
+  - id: earnclaw-hyperliquid-perps-strategy
+    owner: earnorg
+    version: 1.1.0
+    lifecycle: stable
+    riskTier: low
+    executionModel: context_only
+    integrationMode: api_connector
+    custodyMode: managed
+    primaryRail: context
+    sourcePath: earnclaw-hyperliquid-perps-strategy/SKILL.md
+    actionContractMode: not_applicable
+    rails:
+      - agent_runtime
+    requiredEnv:
+      - THIRDFY_AGENT_API_KEY
+    deployKeys:
+      - perps_market_scan
+  - id: earnclaw-hyperliquid-risk-guard
+    owner: earnorg
+    version: 1.1.0
+    lifecycle: stable
+    riskTier: low
+    executionModel: context_only
+    integrationMode: api_connector
+    custodyMode: managed
+    primaryRail: context
+    sourcePath: earnclaw-hyperliquid-risk-guard/SKILL.md
+    actionContractMode: not_applicable
+    rails:
+      - agent_runtime
+    requiredEnv:
+      - THIRDFY_AGENT_API_KEY
+    deployKeys:
+      - perps_execution_guard
+  - id: earnclaw-allora-forecast
+    owner: earnorg
+    version: 1.1.0
+    lifecycle: stable
+    riskTier: low
+    executionModel: context_only
+    integrationMode: api_connector
+    custodyMode: managed
+    primaryRail: context
+    sourcePath: earnclaw-allora-forecast/SKILL.md
+    actionContractMode: not_applicable
+    rails:
+      - agent_runtime
+    requiredEnv:
+      - THIRDFY_AGENT_API_KEY
+    deployKeys:
+      - allora_forecast

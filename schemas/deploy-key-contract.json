@@ -1,0 +1,31 @@
+{
+  "version": 1,
+  "deployKeys": {
+    "perps_market_scan": {
+      "actionRefs": [
+        "get_hyperliquid_perps_meta",
+        "get_hyperliquid_all_mids",
+        "get_hyperliquid_l2_book",
+        "get_hyperliquid_candles",
+        "get_hyperliquid_user_state",
+        "get_hyperliquid_open_orders",
+        "get_hyperliquid_setup_status"
+      ],
+      "skills": ["thirdfy-hyperliquid-perps-read", "earnclaw-hyperliquid-perps-strategy"]
+    },
+    "perps_execution_guard": {
+      "actionRefs": [
+        "place_hyperliquid_perps_order",
+        "cancel_hyperliquid_perps_order"
+      ],
+      "skills": ["earnclaw-hyperliquid-risk-guard", "thirdfy-cli-execution"]
+    },
+    "allora_forecast": {
+      "actionRefs": [
+        "get_allora_price_inference",
+        "get_allora_market_forecast"
+      ],
+      "skills": ["earnclaw-allora-forecast"]
+    }
+  }
+}
