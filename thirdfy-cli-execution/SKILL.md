@@ -1,7 +1,7 @@
 ---
 name: thirdfy-cli-execution
 description: Run Thirdfy actions with the thirdfy-agent CLI from a shell, script, cron job, Hermes or OpenClaw. Use when the agent can run shell commands and needs to discover actions, check a venue, preview and run a write, and poll its status.
-version: 2.0.0
+version: 2.0.1
 homepage: https://docs.thirdfy.com/documentation/agent-cli
 tags: [thirdfy, cli, execution, hermes, openclaw]
 metadata: {"openclaw":{"requires":{"env":["THIRDFY_AGENT_API_KEY","THIRDFY_AGENT_KEY"]},"primaryEnv":"THIRDFY_AGENT_API_KEY","rails":["cli","agent_wallet"],"executionModel":"hybrid","integrationMode":"cli","custodyMode":"managed","primaryRail":"agent_wallet","contract":{"catalogEndpoint":"/api/v1/agent/actions/catalog","discoveryEndpoint":"/api/v1/agent/actions","executeIntentEndpoint":"/api/v1/agent/execute-intent","statusEndpoint":"/api/v1/agent/execute-intent/status","actionRefsMode":"dynamic_discovery","actionRefs":["get_openmarket_btc_funding","place_hyperliquid_perps_order"],"snapshotSource":"https://api.thirdfy.com/api/v1/agent/actions/catalog"},"contributor":{"allowsExternalContributions":true,"reviewTier":"elevated"},"compatibility":{"apiVersion":"v1","supportedChains":[8453,42161,101,84532],"executionModel":"hybrid"}}}
@@ -9,14 +9,14 @@ metadata: {"openclaw":{"requires":{"env":["THIRDFY_AGENT_API_KEY","THIRDFY_AGENT
 
 # Thirdfy CLI execution
 
-`thirdfy-agent` runs Thirdfy actions from a shell. Every command takes `--json` and prints a stable envelope: read `success`, `code` and `data`. This skill matches **CLI 0.5.0**.
+`thirdfy-agent` runs Thirdfy actions from a shell. Every command takes `--json` and prints a stable envelope: read `success`, `code` and `data`. This skill matches **CLI 0.5.1**.
 
 ## Required Environment
 
 On a machine with a browser, sign in once:
 
 ```bash
-npm install -g @thirdfy/agent-cli@0.5.0
+npm install -g @thirdfy/agent-cli@0.5.1
 thirdfy-agent login --trade --json     # drop --trade for read-only
 thirdfy-agent whoami --json
 ```
@@ -31,12 +31,14 @@ THIRDFY_RUN_MODE=agent_wallet      # act from the agent's own execution wallet
 
 If `THIRDFY_AGENT_KEY` is missing, runs fail with `MISSING_USER_DID`. Keep both values in the runtime's secret store, never in prompts or skill files.
 
-Check at startup, and stop if either fails:
+Check at startup, and stop if it fails:
 
 ```bash
 thirdfy-agent --version --json
-thirdfy-agent whoami --json
+thirdfy-agent doctor certify execution --json
 ```
+
+Certify changes nothing. It checks the CLI and the venue writes your agent may call. Actions outside the agent's allowlist are listed under `skippedVenueActions`, not counted as failures. It needs CLI 0.5.1 or later.
 
 ## Core Endpoints
 
